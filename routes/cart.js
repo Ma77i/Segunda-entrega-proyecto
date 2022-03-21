@@ -1,12 +1,31 @@
 const express = require('express');
 const { Router } = express;
+
 const Carrito = require('../model/carrito.js')
+const controller = require('../controllers/cart')
 
 const router = Router();
 
 
 
 
+router.get("", controller.get)
+
+router.post("", controller.post)
+
+router.get("/:id/productos", controller.getCart)
+
+router.post("/:id/productos/:idprod", controller.postCart)
+
+// BORRO UN CARRITO
+router.delete('/:id', controller.deleteCart)
+// BORRO UN PRODUCTO
+router.delete('/:id/productos/:product', controller.deleteProd)
+
+
+
+
+/* 
 // OBTENGO TODOS LOS CARRITOS
 router.get('/', async (req, res) => {
     const cart = await Carrito.getAllCart()
@@ -72,7 +91,7 @@ router.delete('/:id/productos/:product', async(req, res) => {
     await Carrito.deleteProd(id, product)
     res.sendStatus(202)
 })
-
+ */
 
 
 

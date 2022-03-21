@@ -1,5 +1,6 @@
 const productModel = require('../model/mongo')
 
+
 module.exports = {
   get: async (req, res) => {
     const { orderBy, search } = req.query
@@ -47,15 +48,20 @@ module.exports = {
     }
   },
 
-  delete: async(req, res) => {
+  deleteProd: async(req, res) => {
     const { id } = req.params
     try {
       const dlt = await productModel.deleteById(id)
-      res.status(200).send(dlt)
+      res.status(200).send("Product deleted")
+
     } catch (error) {
       console.log(error)
       res.status(500).send(error)
     }
-    res.send("OK")
+  },
+
+  deleteAll: async(req, res) => {
+    const delAll = await productModel.deleteAll()
+    res.status(200).send(delAll)
   }
 }

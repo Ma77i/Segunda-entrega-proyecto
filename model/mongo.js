@@ -31,12 +31,12 @@ class Product {
         } else {
             products = await this.model.find(find)
         }
-        console.log(products)
+        //console.log(products)
         return products
     }
 
     async getById(id) {
-		let doc = await this.model.find(id);
+		let doc = await this.model.find({id});
 
 		if (!doc) {
 			throw new Error(`id ${id} no encontrado`);
@@ -55,7 +55,7 @@ class Product {
 	}
 
 	async deleteById(id) {
-		const del = await this.model.deleteOne({ id })
+        const del = await this.model.deleteOne({ _id: id })
         if (!del) {
             throw new Error(`id ${id} no encontrado`);
         }

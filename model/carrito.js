@@ -72,7 +72,7 @@ class Carrito {
     }
 
 
-
+    
 // BORRAR CARRITO
     async deleteCart(id) {
         const pd = await this.getAllCart()
