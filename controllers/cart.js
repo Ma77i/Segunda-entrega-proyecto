@@ -65,5 +65,15 @@ module.exports = {
             console.log(error)
             res.status(500).send(error)
         }
+    },
+
+    deleteAll: async (req, res) => {
+        try {
+            const del = await cartModel.deleteAll()
+            res.status(200).send(del)
+        } catch (error) {
+            console.log(error)
+            res.status(500).send(error)
+        }
     }
 }
