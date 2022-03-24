@@ -1,6 +1,4 @@
 (async() => {
-    console.log("IIFE");
-
     const admin = require("firebase-admin")
     const { getFirestore } = require("firebase-admin/firestore")
 
@@ -27,7 +25,7 @@
     }
 
     id++
-    
+
     const doc = query.doc(`${id}`)
     //await doc.create({title: "Hola banda", price: 234})
     //await doc.update({ title: "Pink Floyd" })

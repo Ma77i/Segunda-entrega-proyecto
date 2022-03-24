@@ -36,8 +36,8 @@ class Product {
     }
 
     async getById(id) {
-		let doc = await this.model.find({id});
-
+		let doc = await this.model.findOne({id});
+        console.log("object", doc);
 		if (!doc) {
 			throw new Error(`id ${id} no encontrado`);
 		}
