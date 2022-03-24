@@ -29,7 +29,6 @@ router.delete("/:id", controller.deleteProdF) //firebase
 
 //DELETE ALL 
 //router.delete("", controller.deleteAll) //mongo
-router.delete("", controller.deleteAllF) //firebase
 
 
 module.exports = router

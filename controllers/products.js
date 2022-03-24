@@ -59,12 +59,6 @@ module.exports = {
     }
   },
 
-  deleteAllF: async(req, res) => {
-    const delAll = await productFirebase.deleteAll()
-    res.status(200).send(delAll)
-  },
-
-
 
 
 
