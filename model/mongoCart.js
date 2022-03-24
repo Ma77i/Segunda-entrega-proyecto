@@ -12,9 +12,10 @@ class Cart {
     }
 
     async create(prod) {
-        const product = await this.model.create(prod)
-        //console.log("Carro:", JSON.stringify(product, null, 2))
-        return product
+        const product = await this.model
+            .create(prod)
+            .then(() => console.log("Carrito creado con exito"))
+            .catch((err) => console.log(err));
     }
 
     // OBTENER CARRITO 
@@ -31,7 +32,6 @@ class Cart {
     async addToCart(id, prod) {
         const cart = await this.getCart(id)
         const idpd = await prodModel.getById(prod)
-        //console.log("Producto por ID:", idpd)
         cart.product.push(prod)
         await cart.save()
         return cart
@@ -54,11 +54,9 @@ class Cart {
 
     async getById(id) {
 		let doc = await this.model.find(id);
-
 		if (!doc) {
 			throw new Error(`id ${id} no encontrado`);
 		}
-
 		return doc
 	}
 

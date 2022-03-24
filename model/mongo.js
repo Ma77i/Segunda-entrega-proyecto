@@ -18,9 +18,10 @@ class Product {
 
 // CREAR UN PRODUCTO
     async create(obj) {
-        const product = await this.model.create(obj)
-        console.log(JSON.stringify(product, null, 2))
-        return product
+        await this.model
+            .create(obj)
+            .then(() => console.log("Producto creado con exito"))
+            .catch((err) => console.log(err));
     }
 
 // OBTENER TODOS LOS PRODUCTOS
@@ -40,7 +41,7 @@ class Product {
 
 // OBTENER UN PRODUCTO
     async getById(id) {
-		let doc = await this.model.findOne({id});
+		let doc = await this.model.findOne({_id: id});
         console.log("object", doc);
 		if (!doc) {
 			throw new Error(`id ${id} no encontrado`);
@@ -50,21 +51,19 @@ class Product {
 
 // ACTUALIZAR UN PRODUCTO
     async updateById(id, obj) {
-		const up = await this.model.updateOne({ _id: id }, { $set: obj })
-        if (!up) {
-            throw new Error(`id ${id} no encontrado`);
-        }
-        return up
+		await this.model
+            .updateOne({ _id: id }, { $set: obj })
+            .then(() => console.log("Producto actualizado con exito"))
+            .catch((err) => console.log(err));
 	}
 
 
 // BORRAR UN PRODUCTO
 	async deleteById(id) {
-        const del = await this.model.deleteOne({ _id: id })
-        if (!del) {
-            throw new Error(`id ${id} no encontrado`);
-        }
-        return del
+        await this.model
+            .deleteOne({ _id: id })
+            .then(() => console.log("Producto borrado con exito"))
+            .catch((err) => console.log(err));
 	}
 
 
