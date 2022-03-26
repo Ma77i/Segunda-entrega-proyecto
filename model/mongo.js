@@ -1,81 +1,100 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 class Product {
     constructor() {
         const schema = new mongoose.Schema({
-            title: { type: String, default: 'no name'},
+            title: {
+                type: String,
+                default: "no name",
+            },
             descripcion: String,
             price: Number,
-            stock: { type: Number, default: 0},
+            stock: {
+                type: Number,
+                default: 0,
+            },
             code: String,
             thumbnail: String,
-            timestamp: { type: Number, default: Date.now() }
-        })
+            timestamp: {
+                type: Number,
+                default: Date.now(),
+            },
+        });
 
-        this.model = mongoose.model("productos", schema)
+        this.model = mongoose.model("productos", schema);
     }
 
-
-// CREAR UN PRODUCTO
+    // CREAR UN PRODUCTO
     async create(obj) {
-        await this.model
-            .create(obj)
-            .then(() => console.log("Producto creado con exito"))
-            .catch((err) => console.log(err));
+        try {
+            await this.model.create(obj);
+            console.log("Producto creado con exito");
+        } catch {
+            (err) => console.log(err);
+        }
     }
 
-// OBTENER TODOS LOS PRODUCTOS
-    async getAll(orderBy = '', search = '') {
-        let products = []
-        let find = search ? { title: { $regex: search, $options: "i" } } : {}        
+    // OBTENER TODOS LOS PRODUCTOS
+    async getAll(orderBy = "", search = "") {
+        let products = [];
+        let find = search ?
+            {
+                title: {
+                    $regex: search,
+                    $options: "i",
+                },
+            } :
+            {};
         if (orderBy) {
-            const ord = {}
-            ord[orderBy] = 1
-            products = await this.model.find(find).sort(ord)
+            const ord = {};
+            ord[orderBy] = 1;
+            products = await this.model.find(find).sort(ord);
         } else {
-            products = await this.model.find(find)
+            products = await this.model.find(find);
         }
         //console.log(products)
-        return products
+        return products;
     }
 
-// OBTENER UN PRODUCTO
+    // OBTENER UN PRODUCTO
     async getById(id) {
-		let doc = await this.model.findOne({_id: id});
+        let doc = await this.model.findOne({ _id: id, });
         console.log("object", doc);
-		if (!doc) {
-			throw new Error(`id ${id} no encontrado`);
-		}
-		return doc
-	}
+        if (!doc) {
+            throw new Error(`id ${id} no encontrado`);
+        }
+        return doc;
+    }
 
-// ACTUALIZAR UN PRODUCTO
+    // ACTUALIZAR UN PRODUCTO
     async updateById(id, obj) {
-		await this.model
-            .updateOne({ _id: id }, { $set: obj })
-            .then(() => console.log("Producto actualizado con exito"))
-            .catch((err) => console.log(err));
-	}
+        try {
+            await this.model.updateOne({ _id: id, }, { $set: obj, });
+            console.log("Producto actualizado con exito");
+        } catch {
+            (err) => console.log(err);
+        }
+    }
 
+    // BORRAR UN PRODUCTO
+    async deleteById(id) {
+        try {
+            await this.model.deleteOne({ _id: id, });
+            console.log("Producto borrado con exito");
+        } catch {
+            (err) => console.log(err);
+        }
+    }
 
-// BORRAR UN PRODUCTO
-	async deleteById(id) {
-        await this.model
-            .deleteOne({ _id: id })
-            .then(() => console.log("Producto borrado con exito"))
-            .catch((err) => console.log(err));
-	}
-
-
-// BORRAR TODO
-	async deleteAll() {
-		await this.model
-			.deleteMany({})
-			.then(() => console.log("Se eliminaron todos los objetos"))
-			.catch((err) => console.log(err));
-	}
-
+    // BORRAR TODO
+    async deleteAll() {
+        try {
+            await this.model.deleteMany({});
+            console.log("Se eliminaron todos los objetos");
+        } catch {
+            (err) => console.log(err);
+        }
+    }
 }
 
-
-module.exports = new Product()
+module.exports = new Product();
